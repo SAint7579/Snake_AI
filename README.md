@@ -1,5 +1,7 @@
 # Basic snake game played by a DNN
 
+A genetic algorithm based bot that learns to play a game of snake. <br>
+
 Libraries:
  - Numpy
  - Tensorflow
