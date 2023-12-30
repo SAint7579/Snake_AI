@@ -75,7 +75,7 @@ def generate_train_set(model):
                     action_sample[data[1]] = 1
                     output = action_sample
                     # Collecting the training data
-                    training_data.append(np.array([data[0],output]))
+                    training_data.append([data[0],output])
             scores.append(score)
 
                 
@@ -85,8 +85,8 @@ def generate_train_set(model):
     print('Median score for accepted scores:', median(accepted_scores))
     #score_requirement = mean(accepted_scores)
     # Saving the stats
-    training_data_save = np.array([training_data, score_requirement])
-    np.save('saved.npy', training_data_save)
+    training_data_save = [training_data, score_requirement]
+    # np.save('saved.npy', training_data_save)
  
     return training_data
          
@@ -122,7 +122,7 @@ def train_model(training_data,model = False):
     print("Training the Model")
     model.compile(optimizer='adam', loss='categorical_crossentropy')
     model.fit(X, y, epochs=10, batch_size=16, verbose = 1)
-    model.save('miniskake_trained.tflearn')
+    model.save('miniskake_trained.h5')
  
     return model
 def evaluate(model):
@@ -165,7 +165,7 @@ if __name__ == "__main__":
         score_requirement = int(input("Enter the score requirement: "))
         print('Generation: ', generation)
         # training_data = initial_population(model)
-        training_data = np.append(training_data, generate_train_set(None), axis=0)
+        training_data = training_data + generate_train_set(None)
         print('generation: ', generation, ' initial population: ', len(training_data))
         if len(training_data) == 0:
             break
